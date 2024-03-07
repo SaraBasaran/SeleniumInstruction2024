@@ -22,8 +22,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class SauceDemoLoginTests {
 
     WebDriver driver;
-    String loginPageUrl = "https://www.saucedemo.com/v1/index.html";
+
     String landingPageUrl = "https://www.saucedemo.com/v1/inventory.html";
+    String loginPageUrl = "https://www.saucedemo.com/v1/index.html";
     String standardUser = "standard_user";
     String lockedOutUser = "locked_out_user";
     String unifiedPassword = "secret_sauce";

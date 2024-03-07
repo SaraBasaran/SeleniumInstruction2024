@@ -1,10 +1,11 @@
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 
-import java.util.Collections;
 import java.util.List;
 
 public class DropDown extends TestBase{
@@ -13,22 +14,57 @@ public class DropDown extends TestBase{
 
     public void trendyolDropdown() throws InterruptedException {
 
-              List<WebElement> dropdownList= driver.findElements(By.cssSelector("a.sub-category-header"));
-        driver.findElement(By.xpath("//a[@href=\"/butik/liste/1/kadin\"]")).sendKeys(Keys.ENTER);
+           List<WebElement> subheaderList= driver.findElements(By.cssSelector("a.sub-category-header"));
 
-        Actions action = new Actions(driver);
-        WebElement we = driver.findElement(By.xpath("//a[@href=\"/butik/liste/1/kadin\"]"));
-        action.moveToElement(we).build().perform();
-        driver.wait(3000);
+       try{
+            Actions action = new Actions(driver);
+            WebElement headerKadin = driver.findElement(By.xpath("//a[@href='/butik/liste/1/kadin']"));
 
-        for (WebElement dropdownEle: dropdownList) {
-           String dropdownListKadin= dropdownEle.getText();
-            System.out.println("dropdownListKadin = " + dropdownListKadin);
+            action.moveToElement(headerKadin).build().perform();
+
+           JavascriptExecutor js = (JavascriptExecutor) driver;
+           js.executeScript("document.getElementById('sub-nav-1').setAttribute('class', 'sub-nav animation enable')");
+
+            for (WebElement dropdownEle: subheaderList) {
+                String subheaderItem= dropdownEle.getText();
+                System.out.println(subheaderItem);
+            }
+
+        }catch (StaleElementReferenceException e){
+
+            System.out.println("subheaderList = " + subheaderList);
+
+        }
+
+       //sub-item-list
+       List<WebElement> subItemList= driver.findElements(By.xpath("//ul[@class='sub-item-list']"));
+
+        Assert.assertEquals(subItemList.size(), 84);
+
+        for (WebElement eachSubItem: subItemList) {
+            String subListItem= eachSubItem.getText();
+            System.out.println(subListItem);
         }
 
 
 
-      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
